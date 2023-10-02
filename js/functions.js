@@ -1,8 +1,8 @@
 const checkLength = (line, maxLenght) => line.length <= maxLenght;
 
 const isPalindrome = (line) => {
-  let normalizedLine = line.replaceAll(' ', '').toLowerCase();
-  let reversedLine = normalizedLine.split('').reverse().join('');;
+  const normalizedLine = line.replaceAll(' ', '').toLowerCase();
+  const reversedLine = normalizedLine.split('').reverse().join('');;
   return reversedLine === normalizedLine;
 }
 
