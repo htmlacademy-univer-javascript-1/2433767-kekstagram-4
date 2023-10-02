@@ -1,28 +1,15 @@
-function checkLength(line, maxLenght) {
-  if (line.length <= maxLenght){
-    return true;
-}
+const checkLength = (line, maxLenght) => line.length <= maxLenght;
 
-return false;
-}
-
-function isPalindrome(line) {
+const isPalindrome = (line) => {
   let normalizedLine = line.replaceAll(' ', '').toLowerCase();
-  let reversedLine = '';
-
-  for (let i = normalizedLine.length - 1; i >= 0; i--) {
-    reversedLine += normalizedLine[i];
-  }
-
-  if (reversedLine === normalizedLine){
-    return true
-  }
-
-  return false;
+  let reversedLine = normalizedLine.split('').reverse().join('');;
+  return reversedLine === normalizedLine;
 }
 
-let maxLenght = 5;
-let line = 'топот';
+checkLength('проверяемая строка', 20);
+checkLength('проверяемая строка', 18);
+checkLength('проверяемая строка', 10);
 
-checkLength(line, maxLenght);
-isPalindrome(line);
+isPalindrome('топот');
+isPalindrome('ДовОд');
+isPalindrome('Кекс');
