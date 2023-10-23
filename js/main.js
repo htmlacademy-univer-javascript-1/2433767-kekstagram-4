@@ -1,9 +1,9 @@
 const POSTS_COUNT = 25;
-const LIKES_COUNT = { MIN: 15, MAX: 200 };
-const COMMENTS_COUNT = 30;
+const LikeCount = { MIN: 15, MAX: 200 };
+const COMMENT_COUNT = 30;
 const AVATAR_COUNT = 6;
 
-const POST_DESCRIPTION = [
+const DESCRIPTIONS = [
   'Закат на пляже',
   'Закат в горах',
   'Архитектурное чудо в самом сердце города',
@@ -85,9 +85,9 @@ const createComment = () => ({
 const createPost = (id) => ({
   id,
   url: `photos/${id}.jpg`,
-  description: getRandomArrayElement(POST_DESCRIPTION),
-  likes: getRandomNumber(LIKES_COUNT.MIN, LIKES_COUNT.MAX),
-  comments: Array.from({length: getRandomNumber(0, COMMENTS_COUNT)}, createComment),
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomNumber(LikeCount.MIN, LikeCount.MAX),
+  comments: Array.from({length: getRandomNumber(0, COMMENT_COUNT)}, createComment),
 });
 
 const getPosts = () => Array.from(
