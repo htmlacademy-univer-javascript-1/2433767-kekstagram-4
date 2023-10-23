@@ -1,6 +1,6 @@
 const POSTS_COUNT = 25;
 const LikeCount = { MIN: 15, MAX: 200 };
-const COMMENT_COUNT = 30;
+const COMMENTS_COUNT = 30;
 const AVATAR_COUNT = 6;
 
 const DESCRIPTIONS = [
@@ -87,7 +87,7 @@ const createPost = (id) => ({
   url: `photos/${id}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomNumber(LikeCount.MIN, LikeCount.MAX),
-  comments: Array.from({length: getRandomNumber(0, COMMENT_COUNT)}, createComment),
+  comments: Array.from({length: getRandomNumber(0, COMMENTS_COUNT)}, createComment),
 });
 
 const getPosts = () => Array.from(
