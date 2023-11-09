@@ -1,5 +1,5 @@
 import {
-  COMMENTS_COUNT
+  POSTS_COUNT
 } from './constants.js';
 
 import {
