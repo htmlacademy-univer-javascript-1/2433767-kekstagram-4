@@ -1,5 +1,15 @@
 import { isEscapeKey } from './utils.js';
-import { generateCommentTemplate } from './templates.js';
+
+const generateCommentTemplate = ({ name, avatar, message }) =>`
+  <li class="social__comment">
+    <img
+      class="social__picture"
+      src="${avatar}"
+      alt="${name}"
+      width="35" height="35">
+    <p class="social__text">${message}</p>
+  </li>
+`;
 
 const body = document.querySelector('body');
 const fullPicture = document.querySelector('.big-picture');
@@ -27,11 +37,11 @@ const renderComments = (comments) => {
 const closeFullViewPopup = () => {
   fullPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  exitButton.removeEventListener('click', onCloseBttnClick);
+  exitButton.removeEventListener('click', onExitButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
 };
 
-function onCloseBttnClick() {
+function onExitButtonClick() {
   closeFullViewPopup();
 }
 
@@ -50,6 +60,6 @@ export const openFullViewPopup = (picture) => {
   commentCount.classList.add('hidden');
   body.classList.add('modal-open');
 
-  exitButton.addEventListener('click', onCloseBttnClick);
+  exitButton.addEventListener('click', onExitButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
