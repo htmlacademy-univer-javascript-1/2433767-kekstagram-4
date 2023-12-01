@@ -1,20 +1,14 @@
 import { isEscapeKey } from './utils.js';
+import { createCommentTemplate } from './templates.js';
+import { COMMENTS_INTERVAL } from './constants.js';
 
-const generateCommentTemplate = ({ name, avatar, message }) =>`
-  <li class="social__comment">
-    <img
-      class="social__picture"
-      src="${avatar}"
-      alt="${name}"
-      width="35" height="35">
-    <p class="social__text">${message}</p>
-  </li>
-`;
+let allComments = null;
 
 const body = document.querySelector('body');
 const fullPicture = document.querySelector('.big-picture');
 const commentCount = fullPicture.querySelector('.social__comment-count');
 const commentList = fullPicture.querySelector('.social__comments');
+const commentsLoader = fullPicture.querySelector('.social__comments-loader');
 const exitButton = fullPicture.querySelector('.big-picture__cancel');
 
 const renderFullPicture = ({ url, likes, description }) => {
@@ -26,22 +20,36 @@ const renderFullPicture = ({ url, likes, description }) => {
   fullPicture.querySelector('.likes-count').textContent = likes;
 };
 
-const renderComments = (comments) => {
-  commentList.innerHTML = '';
-  commentList.insertAdjacentHTML(
-    'afterbegin',
-    comments.map((comment) => generateCommentTemplate(comment)).join('')
-  );
+const renderComments = () => {
+  const visibleComments = allComments.slice(0, COMMENTS_INTERVAL);
+
+  commentList.innerHTML = visibleComments.map((comment) => createCommentTemplate(comment)).join('');
+  commentCount.textContent = `${visibleComments.length} из ${allComments.length} комментариев`;
+
+  if (visibleComments.length < allComments.length) {
+    commentsLoader.classList.remove('hidden');
+  } else {
+    commentsLoader.classList.add('hidden');
+  }
 };
 
 const closeFullViewPopup = () => {
+  allComments = null;
+
   fullPicture.classList.add('hidden');
+  commentCount.classList.add('hidden');
   body.classList.remove('modal-open');
-  exitButton.removeEventListener('click', onExitButtonClick);
+
+  exitButton.removeEventListener('click', onCloseBtnClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
 };
 
-function onExitButtonClick() {
+const onShowMoreComments = () => {
+  COMMENTS_INTERVAL += COMMENTS_INTERVAL;
+  renderComments();
+};
+
+function onCloseBtnClick() {
   closeFullViewPopup();
 }
 
@@ -53,13 +61,16 @@ function onDocumentEscKeydown(evt) {
 }
 
 export const openFullViewPopup = (picture) => {
+  allComments = picture.comments;
+
   renderFullPicture(picture);
-  renderComments(picture.comments);
+  renderComments();
 
   fullPicture.classList.remove('hidden');
-  commentCount.classList.add('hidden');
+  commentCount.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  exitButton.addEventListener('click', onExitButtonClick);
+  exitButton.addEventListener('click', onCloseBtnClick);
+  commentsLoader.addEventListener('click', onShowMoreComments);
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
