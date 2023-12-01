@@ -3,6 +3,7 @@ import { createCommentTemplate } from './templates.js';
 import { COMMENTS_INTERVAL } from './constants.js';
 
 let allComments = null;
+let commentsToShow = COMMENTS_INTERVAL;
 
 const body = document.querySelector('body');
 const fullPicture = document.querySelector('.big-picture');
@@ -21,7 +22,7 @@ const renderFullPicture = ({ url, likes, description }) => {
 };
 
 const renderComments = () => {
-  const visibleComments = allComments.slice(0, COMMENTS_INTERVAL);
+  const visibleComments = allComments.slice(0, commentsToShow);
 
   commentList.innerHTML = visibleComments.map((comment) => createCommentTemplate(comment)).join('');
   commentCount.textContent = `${visibleComments.length} из ${allComments.length} комментариев`;
@@ -35,6 +36,7 @@ const renderComments = () => {
 
 const closeFullViewPopup = () => {
   allComments = null;
+  commentsToShow = COMMENTS_INTERVAL;
 
   fullPicture.classList.add('hidden');
   commentCount.classList.add('hidden');
@@ -45,7 +47,7 @@ const closeFullViewPopup = () => {
 };
 
 const onShowMoreComments = () => {
-  COMMENTS_INTERVAL += COMMENTS_INTERVAL;
+  commentsToShow += COMMENTS_INTERVAL;
   renderComments();
 };
 
