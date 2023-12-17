@@ -32,7 +32,7 @@ const hashtagsHandler = (value) => {
     return true;
   }
 
-  const rules = [
+  const hashtagRules = [
     {
       check: inputArray.some((item) => item.indexOf('#', 1) >= 1),
       error: 'Хэш-теги разделяются пробелами',
@@ -59,7 +59,7 @@ const hashtagsHandler = (value) => {
     },
   ];
 
-  return rules.every((rule) => {
+  return hashtagRules.every((rule) => {
     const isInvalid = rule.check;
     if (isInvalid) {
       errorMessage = rule.error;
