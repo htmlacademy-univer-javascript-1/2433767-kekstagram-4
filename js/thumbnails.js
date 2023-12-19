@@ -1,5 +1,14 @@
 import { openFullViewPopup } from './full-picture-popup.js';
-import { generatePictureTemplate } from './templates.js';
+
+const generatePictureTemplate = ({ id, url, description, likes, comments }) => `
+  <a href="#" data-id="${id}" class="picture">
+    <img class="picture__img" src="${url}" width="182" height="182" alt="${description}">
+    <p class="picture__info">
+      <span class="picture__comments">${likes}</span>
+      <span class="picture__likes">${comments.length}</span>
+    </p>
+  </a>
+`;
 
 const PICTURE_SELECTOR = '.picture';
 const PICTURES_SELECTOR = '.pictures';
