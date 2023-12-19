@@ -1,9 +1,9 @@
 import {imagePreview} from './form.js';
 
-export const effectList = document.querySelector('.effects__list');
-export const sliderWrapper = document.querySelector('.effect-level');
 const slider = document.querySelector('.effect-level__slider');
 const effectValue = document.querySelector('.effect-level__value');
+export const effectList = document.querySelector('.effects__list');
+export const sliderWrapper = document.querySelector('.effect-level');
 
 const MAX_BLUR_VALUE = 3;
 const MAX_BRIGHTNESS_VALUE = 3;
@@ -20,8 +20,8 @@ const Slider = {
   STEP: 0.1
 };
 
-const Effects = {
-  chrome: {
+const Effect = {
+  CHROME: {
     filter: 'grayscale',
     units: '',
 
@@ -34,7 +34,7 @@ const Effects = {
       step: EFFECTS_STEP,
     }
   },
-  sepia: {
+  SEPIA: {
     filter: 'sepia',
     units: '',
 
@@ -47,7 +47,7 @@ const Effects = {
       step: EFFECTS_STEP,
     }
   },
-  marvin: {
+  MARVIN: {
     filter: 'invert',
     units: '%',
 
@@ -60,7 +60,7 @@ const Effects = {
       step: EFFECTS_STEP,
     }
   },
-  phobos: {
+  PHOBOS: {
     filter: 'blur',
     units: 'px',
 
@@ -73,7 +73,7 @@ const Effects = {
       step: EFFECTS_STEP,
     }
   },
-  heat: {
+  HEAT: {
     filter: 'brightness',
     units: '',
 
@@ -110,9 +110,9 @@ export const initEffects = () => {
 };
 
 export const onFilterButtonChange = (evt) => {
-  const evtHandler = evt.target.value;
+  const target = evt.target.value;
 
-  if (evtHandler === 'none') {
+  if (target === 'none') {
     sliderWrapper.classList.add('hidden');
     imagePreview.style.filter = 'none';
   }
@@ -120,11 +120,11 @@ export const onFilterButtonChange = (evt) => {
   else {
     sliderWrapper.classList.remove('hidden');
 
-    imagePreview.setAttribute('class', `effects__preview--${evtHandler}`);
-    slider.noUiSlider.updateOptions(Effects[evtHandler].options);
+    imagePreview.setAttribute('class', `effects__preview--${target.toUpperCase()}`);
+    slider.noUiSlider.updateOptions(Effect[target.toUpperCase()].options);
     slider.noUiSlider.on('update', (values, handle) => {
       effectValue.value = values[handle];
-      imagePreview.style.filter = `${Effects[evtHandler].filter}(${effectValue.value}${Effects[evtHandler].units})`;
+      imagePreview.style.filter = `${Effect[target].filter}(${effectValue.value}${Effect[target].units})`;
     });
   }
 };
