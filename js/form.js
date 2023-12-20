@@ -1,6 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { Zoom } from './constants.js';
-import { effectList, sliderWrapper } from './effects.js';
+import { slider, Effect, effectList } from './effects.js';
+import {imagePreview} from './form.js';
+
 
 const body = document.querySelector('body');
 const overlay = body.querySelector('.img-upload__overlay');
@@ -9,6 +11,8 @@ const formUploadClose = body.querySelector('#upload-cancel');
 const plusButton = body.querySelector('.scale__control--bigger');
 const minusButton = body.querySelector('.scale__control--smaller');
 const scaleControlValue = body.querySelector('.scale__control--value');
+const sliderWrapper = document.querySelector('.effect-level');
+const effectValue = document.querySelector('.effect-level__value');
 export const imagePreview = body.querySelector('.img-upload__preview img');
 export const formUpload = body.querySelector('.img-upload__form');
 
