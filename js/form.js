@@ -1,8 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { Zoom } from './constants.js';
 import { slider, Effect, effectList } from './effects.js';
-import {imagePreview} from './form.js';
-
 
 const body = document.querySelector('body');
 const overlay = body.querySelector('.img-upload__overlay');
