@@ -1,9 +1,5 @@
-import {imagePreview} from './form.js';
-
-const slider = document.querySelector('.effect-level__slider');
-const effectValue = document.querySelector('.effect-level__value');
+export const slider = document.querySelector('.effect-level__slider');
 export const effectList = document.querySelector('.effects__list');
-export const sliderWrapper = document.querySelector('.effect-level');
 
 const MAX_BLUR_VALUE = 3;
 const MAX_BRIGHTNESS_VALUE = 3;
@@ -20,7 +16,7 @@ const Slider = {
   STEP: 0.1
 };
 
-const Effect = {
+export const Effect = {
   CHROME: {
     filter: 'grayscale',
     units: '',
@@ -107,24 +103,4 @@ export const initEffects = () => {
   };
 
   noUiSlider.create(slider, sliderConfig);
-};
-
-export const onFilterButtonChange = (evt) => {
-  const target = evt.target.value;
-
-  if (target === 'none') {
-    sliderWrapper.classList.add('hidden');
-    imagePreview.style.filter = 'none';
-  }
-
-  else {
-    sliderWrapper.classList.remove('hidden');
-
-    imagePreview.setAttribute('class', `effects__preview--${target.toUpperCase()}`);
-    slider.noUiSlider.updateOptions(Effect[target.toUpperCase()].options);
-    slider.noUiSlider.on('update', (values, handle) => {
-      effectValue.value = values[handle];
-      imagePreview.style.filter = `${Effect[target].filter}(${effectValue.value}${Effect[target].units})`;
-    });
-  }
 };
