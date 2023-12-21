@@ -1,8 +1,10 @@
 import { MAX_SYMBOLS_HASHTAG } from './constants.js';
-import { MAX_HASHTAGS } from './constants.js';
+import { MAX_HASHTAGS, MAX_STRING_LENGTH } from './constants.js';
+import { checkLenght } from './util.js';
 
 const formUpload = document.querySelector('.img-upload__form');
-const submitButton = document.querySelector('#upload-submit');
+const submitButton = document.querySelector('.img-upload__submit');
+const commentsField = formUpload.querySelector('.text__description');
 
 const pristine = new Pristine(formUpload, {
   classTo: 'img-upload__field-wrapper',
@@ -11,7 +13,11 @@ const pristine = new Pristine(formUpload, {
   errorTextClass: 'img-upload__error'
 }, true);
 
-const inputHashtag = document.querySelector('.text__hashtags');
+export const buttonAdjustment = () => {
+  submitButton.disabled = !pristine.validate();
+};
+
+export const inputHashtag = document.querySelector('.text__hashtags');
 
 let errorMessage = '';
 
@@ -68,23 +74,31 @@ const hashtagsHandler = (value) => {
   });
 };
 
-pristine.addValidator(inputHashtag, hashtagsHandler, error, 2, false);
+const commentHandler = (string) => {
+  const inputText = string.trim();
 
-const onHashtagInput = () => {
-  if (pristine.validate()) {
-    submitButton.disabled = true;
+  if (!inputText) {
+    return true;
   }
-  else {
-    submitButton.disabled = false;
-  }
+
+  const isInvalid = !checkLenght(inputText, MAX_STRING_LENGTH);
+  errorMessage = isInvalid ? `Максимальная длина комментария ${MAX_STRING_LENGTH} символов` : '';
+
+  return !isInvalid;
 };
 
+pristine.addValidator(inputHashtag, hashtagsHandler, error, 2, false);
+pristine.addValidator(commentsField, commentHandler, error, 2, false);
+
+const onHashtagInput = () => buttonAdjustment();
+const onCommentInput = () => buttonAdjustment();
+
 inputHashtag.addEventListener('input', onHashtagInput);
+commentsField.addEventListener('input', onCommentInput);
+
 
 formUpload.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   pristine.validate();
 });
-
-export {inputHashtag};
