@@ -6,9 +6,12 @@ import {showAlert} from './util.js';
 import './form.js';
 import './hashtag-pristine.js';
 import './message.js';
+import './own-photo.js';
 
 renderPhotos(getPictures());
+
 initEffects();
+
 let photos = [];
 const SHOW_TIME = 5000;
 const onSuccess = (data) => {
