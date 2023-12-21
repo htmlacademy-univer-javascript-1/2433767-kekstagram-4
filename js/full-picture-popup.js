@@ -1,5 +1,4 @@
 import { isEscapeKey } from './utils.js';
-import { createCommentTemplate } from './templates.js';
 import { COMMENTS_INTERVAL } from './constants.js';
 
 let allComments = null;
@@ -11,6 +10,17 @@ const commentCount = fullPicture.querySelector('.social__comment-count');
 const commentList = fullPicture.querySelector('.social__comments');
 const commentsLoader = fullPicture.querySelector('.social__comments-loader');
 const exitButton = fullPicture.querySelector('.big-picture__cancel');
+
+const generateCommentTemplate = ({ name, avatar, message }) =>`
+ <li class="social__comment">
+ <img
+ class="social__picture"
+ src="${avatar}"
+ alt="${name}"
+ width="35" height="35">
+ <p class="social__text">${message}</p>
+ </li>
+`;
 
 const renderFullPicture = ({ url, likes, description }) => {
   const picture = fullPicture.querySelector('.big-picture__img img');
@@ -24,7 +34,7 @@ const renderFullPicture = ({ url, likes, description }) => {
 const renderComments = () => {
   const visibleComments = allComments.slice(0, commentsToShow);
 
-  commentList.innerHTML = visibleComments.map((comment) => createCommentTemplate(comment)).join('');
+  commentList.innerHTML = visibleComments.map((comment) => generateCommentTemplate(comment)).join('');
   commentCount.textContent = `${visibleComments.length} из ${allComments.length} комментариев`;
 
   if (visibleComments.length < allComments.length) {

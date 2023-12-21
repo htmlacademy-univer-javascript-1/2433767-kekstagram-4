@@ -1,53 +1,29 @@
-export const createIdGenerator = () => {
-  let lastGenerateId = 0;
+import { ALERT_SHOW_TIME } from './constants.js';
 
-  return () => {
-    lastGenerateId++;
-    return lastGenerateId;
-  };
-};
+export const checkLenght = (inputString, maxLenght) => inputString.length <= maxLenght;
+export const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isImageFile = (file) => file && file.type.startsWith('image/');
+export const parseNumber = (string) => parseInt(string, 10);
 
-export const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
+export const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
 
-  return Math.floor(result);
-};
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.margin = '5px 10px';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '22px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.borderRadius = '5px';
 
-export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
 
-export const checkLengthString = (input, maxLength) => input.length <= maxLength;
-
-export const isPalindrome = (input) => {
-  const string = input.toLowerCase().replaceAll(' ', '');
-  const reverseString = string.split('').reverse().join('');
-  return string === reverseString;
-};
-
-export const extractNumbers = (input) => {
-  const string = input.toString();
-  let result = '';
-  for (let i = 0; i < string.length; i++) {
-    const char = string.at(i);
-    if (!isNaN(parseInt(char, 10))) {
-      result += char;
-    }
-  }
-  return result ? +result : NaN;
-};
-
-export const parsingTimeToMinutes = (time) => {
-  const [hours, minutes] = time.split(':').map(Number);
-  return hours * 60 + minutes;
-};
-
-export const isMeetingIntoWork = (startWork, endWork, startMeeting, durationMeeting) => {
-  const startWorkMinutes = parsingTimeToMinutes(startWork);
-  const endWorkMinutes = parsingTimeToMinutes(endWork);
-
-  const startMeetingMinutes = parsingTimeToMinutes(startMeeting);
-  const endMeetingMinutes = startMeetingMinutes + durationMeeting;
-
-  return startWorkMinutes <= startMeetingMinutes && endMeetingMinutes <= endWorkMinutes;
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
