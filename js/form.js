@@ -12,9 +12,9 @@ const minusButton = body.querySelector('.scale__control--smaller');
 const scaleControlValue = body.querySelector('.scale__control--value');
 const sliderWrapper = document.querySelector('.effect-level');
 const effectValue = document.querySelector('.effect-level__value');
-const commentsField = formUpload.querySelector('.text__description');
 export const imagePreview = body.querySelector('.img-upload__preview img');
 export const formUpload = body.querySelector('.img-upload__form');
+const commentsField = formUpload.querySelector('.text__description');
 
 const onFilterButtonChange = (evt) => {
   const target = evt.target.value;

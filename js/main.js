@@ -10,10 +10,10 @@ import './message.js';
 renderPhotos(getPictures());
 initEffects();
 let photos = [];
-
+const SHOW_TIME = 5000;
 const onSuccess = (data) => {
   photos = data.slice();
-  renderPictures(photos);
+  renderPhotos(photos);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
